@@ -86,7 +86,7 @@ function check_rtl8188eus_integration() {
     if [ ! -d "drivers/net/wireless/realtek/rtl8188eus" ]; then
         echo "[+] Integrating rtl8188eus driver into kernel source..."
         # Copy the driver to the kernel source
-        cp -r ../rtl8188eus drivers/net/wireless/realtek/
+        cp -r rtl8188eus drivers/net/wireless/realtek/
         
         # Add the driver to the Kconfig file
         if ! grep -q "source \"drivers/net/wireless/realtek/rtl8188eus/Kconfig\"" drivers/net/wireless/realtek/Kconfig; then
