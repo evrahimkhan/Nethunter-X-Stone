@@ -1,0 +1,138 @@
+2025-08-22 15:13:44.156 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-vsliveshare.vsliveshare' wants API proposal 'notebookCellExecutionState' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-08-22 15:13:44.173 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.gather' wants API proposal 'notebookCellExecutionState' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-08-22 15:13:44.173 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-pylance' wants API proposal 'mcpConfigurationProvider' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-08-22 15:13:44.569 [info] ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+2025-08-22 15:13:44.925 [info] Started local extension host with pid 31298.
+2025-08-22 15:13:45.064 [info] Started initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2025-08-22 15:13:45.563 [info] Completed initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2025-08-22 15:13:46.712 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-08-22 15:13:47.959 [info] [perf] Render performance baseline is 57ms
+2025-08-22 15:14:28.117 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-vsliveshare.vsliveshare' wants API proposal 'notebookCellExecutionState' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-08-22 15:14:28.118 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.gather' wants API proposal 'notebookCellExecutionState' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-08-22 15:14:28.119 [warning] Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-pylance' wants API proposal 'mcpConfigurationProvider' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+2025-08-22 15:14:28.337 [info] ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+2025-08-22 15:14:28.605 [info] Started local extension host with pid 32473.
+2025-08-22 15:14:29.954 [info] Settings Sync: Account status changed from uninitialized to unavailable
+2025-08-22 15:14:31.206 [info] [perf] Render performance baseline is 57ms
+2025-08-22 15:17:50.860 [error] EntryNotFound (FileSystemError): 
+	at l.readFile (/usr/share/code/resources/app/extensions/git/dist/main.js:2:204733)
+2025-08-22 15:19:13.567 [error] EntryNotFound (FileSystemError): 
+	at l.readFile (/usr/share/code/resources/app/extensions/git/dist/main.js:2:204733)
+2025-08-22 15:20:37.913 [error] Error: Unable to read file '/home/kali/project/new/nethunter-x-stone/rtl8188eus' (Error: Unable to resolve nonexistent file '/home/kali/project/new/nethunter-x-stone/rtl8188eus')
+    at h1t.G (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65912)
+    at h1t.F (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65737)
+    at async E1t.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9345)
+    at async E1t.readStream (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9120)
+    at async _ve.Eb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:12357)
+    at async _ve.resolve (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:10832)
+    at async k1t.W (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:5991)
+    at async KZe.jb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1497:18709)
+    at async Promise.all (index 1)
+    at async Ua.C (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:503:20953)
+2025-08-22 15:20:46.125 [error] Error: Unable to read file '/home/kali/project/new/nethunter-x-stone/rtl8188eus' (Error: Unable to resolve nonexistent file '/home/kali/project/new/nethunter-x-stone/rtl8188eus')
+    at h1t.G (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65912)
+    at h1t.F (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65737)
+    at async E1t.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9345)
+    at async E1t.readStream (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9120)
+    at async _ve.Eb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:12357)
+    at async _ve.resolve (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:10832)
+    at async k1t.W (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:5991)
+    at async KZe.jb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1497:18709)
+    at async Promise.all (index 1)
+    at async Ua.C (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:503:20953)
+2025-08-22 15:20:51.530 [error] Error: The editor could not be opened because the file was not found.
+    at GEe.gc (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2598:81151)
+    at async GEe.setInput (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2598:80309)
+    at async jqe.S (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:58567)
+    at async jqe.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:57122)
+    at async jqe.openEditor (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:56204)
+    at async vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:722:23350
+    at async vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:604:1272
+2025-08-22 15:20:59.364 [error] Error: Unable to read file '/home/kali/project/new/nethunter-x-stone/rtl8188eus' (Error: Unable to resolve nonexistent file '/home/kali/project/new/nethunter-x-stone/rtl8188eus')
+    at h1t.G (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65912)
+    at h1t.F (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65737)
+    at async E1t.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9345)
+    at async E1t.readStream (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9120)
+    at async _ve.Eb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:12357)
+    at async _ve.resolve (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:10832)
+    at async k1t.W (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:5991)
+    at async KZe.jb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1497:18709)
+    at async Promise.all (index 1)
+    at async Ua.C (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:503:20953)
+2025-08-22 15:21:10.352 [error] Error: The editor could not be opened because the file was not found.
+    at GEe.gc (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2598:81151)
+    at async GEe.setInput (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2598:80309)
+    at async jqe.S (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:58567)
+    at async jqe.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:57122)
+    at async jqe.openEditor (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:56204)
+    at async vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:722:23350
+    at async o (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:614:44355)
+2025-08-22 15:21:15.874 [error] Error: Unable to read file '/home/kali/project/new/nethunter-x-stone/rtl8188eus' (Error: Unable to resolve nonexistent file '/home/kali/project/new/nethunter-x-stone/rtl8188eus')
+    at h1t.G (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65912)
+    at h1t.F (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3605:65737)
+    at async E1t.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9345)
+    at async E1t.readStream (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9120)
+    at async _ve.Eb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:12357)
+    at async _ve.resolve (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:10832)
+    at async k1t.W (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:5991)
+    at async KZe.jb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1497:18709)
+    at async Promise.all (index 1)
+    at async Ua.C (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:503:20953)
+2025-08-22 15:21:19.969 [error] Error: The editor could not be opened because the file was not found.
+    at GEe.gc (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2598:81151)
+    at async GEe.setInput (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2598:80309)
+    at async jqe.S (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:58567)
+    at async jqe.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:57122)
+    at async jqe.openEditor (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:610:56204)
+    at async vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:722:23350
+2025-08-22 15:23:41.875 [error] File seems to be binary and cannot be opened as text: Error: File seems to be binary and cannot be opened as text
+    at E1t.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9493)
+    at async E1t.readStream (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9120)
+    at async _ve.Eb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:12357)
+    at async _ve.resolve (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:10832)
+    at async k1t.W (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:5991)
+    at async aKe.r (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:21334)
+    at async gLt.acquire (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:27:3125)
+    at async lKe.createModelReference (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:22890)
+    at async Promise.all (index 1)
+    at async nMt.c (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:540:22073)
+2025-08-22 15:23:42.195 [error] An unknown error occurred. Please consult the log for more details.: EntryNotFound (FileSystemError): 
+	at l.readFile (/usr/share/code/resources/app/extensions/git/dist/main.js:2:204733)
+2025-08-22 15:23:45.189 [error] File seems to be binary and cannot be opened as text: Error: File seems to be binary and cannot be opened as text
+    at E1t.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9493)
+    at async E1t.readStream (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9120)
+    at async _ve.Eb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:12357)
+    at async _ve.resolve (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:10832)
+    at async k1t.W (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:5991)
+    at async aKe.r (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:21334)
+    at async gLt.acquire (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:27:3125)
+    at async lKe.createModelReference (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:22890)
+    at async Promise.all (index 1)
+    at async nMt.c (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:540:22073)
+2025-08-22 15:23:50.477 [error] Illegal value for lineNumber: Error: Illegal value for lineNumber
+    at Lf.getLineMaxColumn (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:271:112)
+    at Ia.getBottomForLineNumber (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:280:1635)
+    at vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:413:124299
+    at $i (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:30:102899)
+    at wZi.t (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:413:123724)
+    at $q._runFn (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:413:123358)
+    at $q.k (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:30:108648)
+    at $q.endUpdate (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:30:109062)
+    at r6.finish (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:30:103625)
+    at $i (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:30:102914)
+2025-08-22 15:23:57.527 [error] File seems to be binary and cannot be opened as text: Error: File seems to be binary and cannot be opened as text
+    at E1t.L (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9493)
+    at async E1t.readStream (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:9120)
+    at async _ve.Eb (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:12357)
+    at async _ve.resolve (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:10832)
+    at async k1t.W (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3606:5991)
+    at async aKe.r (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:21334)
+    at async gLt.acquire (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:27:3125)
+    at async lKe.createModelReference (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:1226:22890)
+    at async Promise.all (index 1)
+    at async nMt.c (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:540:22073)
+2025-08-22 15:24:50.217 [warning] [backup tracker] suspended, ignoring unregister event file:///home/kali/project/new/nethunter-x-stone/.git/COMMIT_EDITMSG 
+2025-08-22 15:24:50.218 [warning] [backup tracker] suspended, ignoring unregister event file:///home/kali/project/new/nethunter-x-stone/KernelSU/js/package.json 
+2025-08-22 15:24:50.221 [warning] [backup tracker] suspended, ignoring unregister event git:/home/kali/project/new/nethunter-x-stone/User/settings.json.git?%7B%22path%22%3A%22%2Fhome%2Fkali%2Fproject%2Fnew%2Fnethunter-x-stone%2FUser%2Fsettings.json%22%2C%22ref%22%3A%22%22%7D 
+2025-08-22 15:24:50.222 [warning] [backup tracker] suspended, ignoring unregister event git:/home/kali/project/new/nethunter-x-stone/logs/20250822T151342/window1/renderer.log.git?%7B%22path%22%3A%22%2Fhome%2Fkali%2Fproject%2Fnew%2Fnethunter-x-stone%2Flogs%2F20250822T151342%2Fwindow1%2Frenderer.log%22%2C%22ref%22%3A%22%22%7D 
+2025-08-22 15:24:50.275 [warning] [backup tracker] suspended, ignoring content change event file:///home/kali/project/new/nethunter-x-stone/logs/20250822T151342/window1/exthost/exthost.log 

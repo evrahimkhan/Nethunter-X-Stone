@@ -1,0 +1,9 @@
+2025-08-22 15:13:45.405 [info] Started initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2025-08-22 15:13:45.665 [warning] Failed to create default profile extensions manifest in extensions installation folder. file:///root/.vscode/extensions Unable to create file 'vscode-userdata:/root/.vscode/extensions/extensions.json' that already exists when overwrite flag is not set
+2025-08-22 15:13:45.665 [info] Completed initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2025-08-22 15:15:19.060 [info] Getting Manifest... knisterpeter.vscode-github
+2025-08-22 15:15:19.151 [info] Installing extension: knisterpeter.vscode-github {"isMachineScoped":false,"installPreReleaseVersion":false,"pinned":false,"profileLocation":{"$mid":1,"external":"vscode-userdata:/root/.vscode/extensions/extensions.json","path":"/root/.vscode/extensions/extensions.json","scheme":"vscode-userdata"},"isApplicationScoped":false,"productVersion":{"version":"1.103.2","date":"2025-08-20T16:45:34.255Z"}}
+2025-08-22 15:15:22.705 [info] Extension signature verification result for knisterpeter.vscode-github: Success. Internal Code: 0. Executed: true. Duration: 2070ms.
+2025-08-22 15:15:23.451 [info] Extracted extension to file:///root/.vscode/extensions/knisterpeter.vscode-github-0.30.7: knisterpeter.vscode-github
+2025-08-22 15:15:23.552 [info] Renamed to /root/.vscode/extensions/knisterpeter.vscode-github-0.30.7
+2025-08-22 15:15:23.578 [info] Extension installed successfully: knisterpeter.vscode-github vscode-userdata:/root/.vscode/extensions/extensions.json
