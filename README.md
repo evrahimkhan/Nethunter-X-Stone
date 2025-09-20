@@ -1,182 +1,168 @@
-# How do I submit patches to Android Common Kernels
+# Nethunter-X-Stone Kernel with RTL8188EUS Driver Support
 
-1. BEST: Make all of your changes to upstream Linux. If appropriate, backport to the stable releases.
-   These patches will be merged automatically in the corresponding common kernels. If the patch is already
-   in upstream Linux, post a backport of the patch that conforms to the patch requirements below.
+## Overview
 
-2. LESS GOOD: Develop your patches out-of-tree (from an upstream Linux point-of-view). Unless these are
-   fixing an Android-specific bug, these are very unlikely to be accepted unless they have been
-   coordinated with kernel-team@android.com. If you want to proceed, post a patch that conforms to the
-   patch requirements below.
+This is a specialized Android kernel for the Redmi Note 12 5G/POCO X5 5G (codename: stone) that incorporates advanced performance management features through the Nethunter Mode Management System and integrates the RTL8188EUS wireless driver for penetration testing capabilities.
 
-# Common Kernel patch requirements
+## Features
 
-- All patches must conform to the Linux kernel coding standards and pass `script/checkpatch.pl`
-- Patches shall not break gki_defconfig or allmodconfig builds for arm, arm64, x86, x86_64 architectures
-(see  https://source.android.com/setup/build/building-kernels)
-- If the patch is not merged from an upstream branch, the subject must be tagged with the type of patch:
-`UPSTREAM:`, `BACKPORT:`, `FROMGIT:`, `FROMLIST:`, or `ANDROID:`.
-- All patches must have a `Change-Id:` tag (see https://gerrit-review.googlesource.com/Documentation/user-changeid.html)
-- If an Android bug has been assigned, there must be a `Bug:` tag.
-- All patches must have a `Signed-off-by:` tag by the author and the submitter
+### 1. Nethunter Mode Management System
 
-Additional requirements are listed below based on patch type
+The kernel includes a comprehensive performance mode management system with three distinct modes:
 
-## Requirements for backports from mainline Linux: `UPSTREAM:`, `BACKPORT:`
+#### Standard Mode (Default)
+- CPU: 300MHz - 1.8GHz
+- GPU: 315MHz - 840MHz
+- Memory: 50% ZRAM compression, balanced swappiness (60)
+- Thermal: Normal limits
 
-- If the patch is a cherry-pick from Linux mainline with no changes at all
-    - tag the patch subject with `UPSTREAM:`.
-    - add upstream commit information with a `(cherry-picked from ...)` line
-    - Example:
-        - if the upstream commit message is
-```
-        important patch from upstream
+#### Gaming Mode (Overclocked)
+- CPU: 1.17GHz - 2.2GHz (overclocked)
+- GPU: 560MHz - 1.1GHz (overclocked)
+- Memory: 75% ZRAM compression, low swappiness (10)
+- Thermal: +15°C headroom for sustained performance
 
-        This is the detailed description of the important patch
+#### Dynamic Mode (Adaptive)
+- CPU: 300MHz - 2.0GHz (adaptive)
+- GPU: 315MHz - 980MHz (adaptive)
+- Memory: 60% ZRAM compression, moderate swappiness (30)
+- Thermal: +5°C moderate headroom
+- Auto-switches based on system load
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-```
-        - then Joe Smith would upload the patch for the common kernel as
-```
-        UPSTREAM: important patch from upstream
+### 2. RTL8188EUS Wireless Driver Integration
 
-        This is the detailed description of the important patch
+The kernel integrates the RTL8188EUS wireless driver with specific Android ARM64 configuration:
+- Built-in driver (CONFIG_RTL8188EU=y) rather than loadable module
+- Android-specific platform configuration
+- Monitor mode support for penetration testing
+- Concurrent mode support
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
+## Build Process
 
-        Bug: 135791357
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        (cherry-picked from c31e73121f4c1ec41143423ac6ce3ce6dafdcec1)
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+### Prerequisites
+- Build environment with required dependencies
+- ARM64 cross-compilation toolchain
+- Android-specific kernel build flags
 
-- If the patch requires any changes from the upstream version, tag the patch with `BACKPORT:`
-instead of `UPSTREAM:`.
-    - use the same tags as `UPSTREAM:`
-    - add comments about the changes under the `(cherry-picked from ...)` line
-    - Example:
-```
-        BACKPORT: important patch from upstream
+### Successful Build Components
 
-        This is the detailed description of the important patch
+1. **Kernel Image**: `out/arch/arm64/boot/Image` (37.5 MB)
+2. **Device Trees**: `dtb.img` and `dtbo.img` ready
+3. **RTL8188EUS Driver**: Integrated as built-in (`CONFIG_RTL8188EU=y`)
+4. **Nethunter Modules**: 
+   - `nethunter_modes.o` - Core mode management
+   - `nethunter_thermal_gpu.o` - Thermal & GPU control
+   - `nethunter_zram_mem.o` - Memory and ZRAM optimization
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
+### Flashable Package
 
-        Bug: 135791357
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        (cherry-picked from c31e73121f4c1ec41143423ac6ce3ce6dafdcec1)
-        [ Resolved minor conflict in drivers/foo/bar.c ]
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+**Created Package**: `Nethunter-X-stone-20250920.zip` (18MB)
+- Complete kernel image with all drivers
+- Device tree overlays for Xiaomi devices
+- Flash utilities for Android deployment
 
-## Requirements for other backports: `FROMGIT:`, `FROMLIST:`,
+## Deployment Instructions
 
-- If the patch has been merged into an upstream maintainer tree, but has not yet
-been merged into Linux mainline
-    - tag the patch subject with `FROMGIT:`
-    - add info on where the patch came from as `(cherry picked from commit <sha1> <repo> <branch>)`. This
-must be a stable maintainer branch (not rebased, so don't use `linux-next` for example).
-    - if changes were required, use `BACKPORT: FROMGIT:`
-    - Example:
-        - if the commit message in the maintainer tree is
-```
-        important patch from upstream
+1. **Flash Kernel**: Use the provided ZIP file to flash the kernel to your Android device
+2. **Boot Device**: Restart your device with the new kernel
+3. **Install Kmod Tool**: Deploy the control script to your Android device
+4. **Test Adapter**: Connect RTL8188EUS USB adapter and verify interface appears
 
-        This is the detailed description of the important patch
+## Usage
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-```
-        - then Joe Smith would upload the patch for the common kernel as
-```
-        FROMGIT: important patch from upstream
+After deployment to Android device:
 
-        This is the detailed description of the important patch
-
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-
-        Bug: 135791357
-        (cherry picked from commit 878a2fd9de10b03d11d2f622250285c7e63deace
-         https://git.kernel.org/pub/scm/linux/kernel/git/foo/bar.git test-branch)
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
+```bash
+# From Android terminal or via ADB:
+su -c "Kmod gaming"     # 🎮 Gaming mode with overclocking
+su -c "Kmod standard"   # ⚖️ Balanced performance
+su -c "Kmod dynamic"    # 🧠 Intelligent scaling  
+su -c "Kmod status"     # 📊 Current system status
 ```
 
+## Driver Configuration Details
 
-- If the patch has been submitted to LKML, but not accepted into any maintainer tree
-    - tag the patch subject with `FROMLIST:`
-    - add a `Link:` tag with a link to the submittal on lore.kernel.org
-    - if changes were required, use `BACKPORT: FROMLIST:`
-    - Example:
+### RTL8188EUS Driver
+- **Configuration**: `CONFIG_RTL8188EU=y` (built-in driver)
+- **Platform**: Android ARM64 (`CONFIG_PLATFORM_ANDROID_ARM64_NETHUNTER=y`)
+- **Interface**: USB HCI (`CONFIG_USB_HCI=y`)
+- **Features**: Monitor mode enabled, concurrent mode supported
+
+### Build Verification
+- ✅ RTL8188EUS driver is enabled in kernel config
+- ✅ Driver appears in `out/modules.builtin`
+- ✅ Configuration tests pass
+- ✅ Driver source properly compiled
+
+## Kernel Integration
+
+### Driver Integration Files
 ```
-        FROMLIST: important patch from upstream
-
-        This is the detailed description of the important patch
-
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-
-        Bug: 135791357
-        Link: https://lore.kernel.org/lkml/20190619171517.GA17557@someone.com/
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
-
-## Requirements for Android-specific patches: `ANDROID:`
-
-- If the patch is fixing a bug to Android-specific code
-    - tag the patch subject with `ANDROID:`
-    - add a `Fixes:` tag that cites the patch with the bug
-    - Example:
-```
-        ANDROID: fix android-specific bug in foobar.c
-
-        This is the detailed description of the important fix
-
-        Fixes: 1234abcd2468 ("foobar: add cool feature")
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
+drivers/net/wireless/realtek/rtl8188eus/
+├── core/
+├── hal/
+├── include/
+├── os_dep/
+├── platform/
+└── Makefile, Kconfig
 ```
 
-- If the patch is a new feature
-    - tag the patch subject with `ANDROID:`
-    - add a `Bug:` tag with the Android bug (required for android-specific features)
+### Kernel Configuration
+The driver is configured in `arch/arm64/configs/nethunter_defconfig`:
+```
+CONFIG_RTL8188EU=y
+CONFIG_PLATFORM_ANDROID_ARM64_NETHUNTER=y
+CONFIG_USB_HCI=y
+CONFIG_WIFI_MONITOR=y
+```
 
-# Vibrator driver for HHG device
-## How to merge the driver into kernel source tree
+## Expected Results After Deployment
 
- 1. Copy \${this_project}/drivers/hid/hid-aksys.c into \${your_kernel_root}/drivers/hid/
+1. **RTL8188EUS Support**:
+   - Plug in RTL8188EUS USB adapter
+   - Adapter automatically recognized
+   - Interface appears as `wlan1` (or similar)
 
- 2. Compare and merge \${this_project}/drivers/hid/hid-ids.h into \${your_kernel_root}/drivers/hid/hid-ids.h :
- Add the following code before the last line of this file
+2. **Monitor Mode Capabilities**:
+   - Full support for penetration testing tools
+   - No separate module loading required
 
-    ```c
-		#define USB_VENDER_ID_QUALCOMM  0x0a12
-		#define USB_VENDER_ID_TEMP_HHG_AKSY 0x1234
-		#define USB_PRODUCT_ID_AKSYS_HHG  0x1000
-    ```
+3. **Nethunter Performance Management**:
+   - Kmod gaming - Maximum performance with overclocking
+   - Kmod standard - Balanced performance (default)
+   - Kmod dynamic - Automatic switching based on system load
 
- 3. Merge \${this_project}/drivers/hid/Kconfig into \${your_kernel_root}/drivers/hid/Kconfig :
-Add the following code before the last line of this file
+## Troubleshooting
 
-		config HID_AKSYS_QRD
-    		tristate "AKSys gamepad USB adapter support"
-    		depends on HID
-    		---help---
-    		Support for AKSys gamepad USB adapter
+### Common Issues
 
-    	config AKSYS_QRD_FF
-    		bool "AKSys gamepad USB adapter force feedback support"
-    		depends on HID_AKSYS_QRD
-    		select INPUT_FF_MEMLESS
-    		---help---
-    		Say Y here if you have a AKSys gamepad USB adapter and want to
-    		enable force feedback support for it.
-    		
- 4. Merge \${this_project}/drivers/hid/Makefile into \${your_kernel_root}/drivers/hid/Makefile :
- Add the following code at the end of this file
+1. **"Kmod command not found"**:
+   - This occurs when trying to run the Android tool on Linux
+   - Solution: Deploy kernel to Android device first
 
-		obj-$(CONFIG_HID_AKSYS_QRD)	+= hid-aksys.o
-		
- 5. Modify your kernel's default build configuration file. Add the following two lines:
+2. **Driver Not Recognized**:
+   - Verify kernel was flashed correctly
+   - Check dmesg for driver loading messages
+   - Ensure USB OTG is enabled on device
 
-        CONFIG_HID_AKSYS_QRD=m
-        CONFIG_AKSYS_QRD_FF=y
+## Security Considerations
+
+- **Overclocking Safety**: Thermal limits increased but monitored
+- **Default Safety**: System defaults to standard mode on boot
+- **Root Requirements**: All features require root access
+
+## Compatibility
+
+- **Kernel Version**: Designed for Android kernel trees
+- **Architecture**: ARM64 (aarch64)
+- **SoC Support**: Primarily Qualcomm Snapdragon with KGSL GPU
+- **Android Version**: Compatible with Android kernel requirements
+- **Root Required**: Yes, for mode switching
+
+## License
+
+GPL v2 - Same as Linux kernel
+
+## Support
+
+Check kernel logs with `dmesg | grep nethunter` for debugging information.
