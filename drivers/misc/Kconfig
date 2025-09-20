@@ -534,6 +534,60 @@ config HQ_SYSFS_SUPPORT
 	help
 	  Huaqin Sysfs information driver includes specific information about hardware info and other info for HQ tools
 
+config NETHUNTER_MODES
+	tristate "Nethunter Kernel Mode Management System"
+	depends on PROC_FS && CPU_FREQ && THERMAL
+	default y
+	help
+	  This driver provides a comprehensive performance mode management system
+	  for Nethunter kernels. It supports three modes:
+
+	  - Standard Mode: Balanced performance and power consumption
+	  - Gaming Mode: Maximum performance with CPU/GPU overclocking
+	  - Dynamic Mode: Automatic switching based on system load
+
+	  The driver provides a /proc/nethunter_mode interface for mode switching
+	  and integrates with thermal management, CPU frequency scaling, and
+	  memory management subsystems.
+
+	  Say Y here if you want to enable Nethunter performance mode management.
+	  You can also control modes via the "Kmod" command-line tool.
+
+config NETHUNTER_THERMAL_GPU
+	tristate "Nethunter Thermal and GPU Management Extensions"
+	depends on NETHUNTER_MODES && THERMAL && PM_DEVFREQ
+	default y
+	help
+	  This module provides enhanced thermal management and GPU frequency
+	  scaling capabilities for the Nethunter mode management system.
+
+	  Features:
+	  - Thermal limit overrides for gaming mode (+15°C headroom)
+	  - GPU frequency scaling (315MHz-1.1GHz)
+	  - CPU boost controls for enhanced performance
+	  - Multiple thermal zone monitoring
+
+	  This module works in conjunction with NETHUNTER_MODES to provide
+	  hardware-level performance optimizations.
+
+config NETHUNTER_ZRAM_MEM
+	tristate "Nethunter ZRAM and Memory Management Extensions"
+	depends on NETHUNTER_MODES && ZRAM && SWAP
+	default y
+	help
+	  This module provides advanced ZRAM configuration and memory management
+	  optimizations for the Nethunter mode management system.
+
+	  Features:
+	  - Dynamic ZRAM sizing based on performance mode
+	  - Multiple compression algorithms (LZ4, LZO-RLE)
+	  - Memory management parameter tuning
+	  - VM pressure and swappiness optimization
+	  - Memory compaction triggers for gaming mode
+
+	  This module optimizes memory usage and compression for different
+	  performance scenarios.
+
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/eeprom/Kconfig"
 source "drivers/misc/cb710/Kconfig"

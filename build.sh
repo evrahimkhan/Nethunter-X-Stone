@@ -166,6 +166,33 @@ function integrate_rtl8188eus() {
         cp -r rtl8188eus drivers/net/wireless/realtek/
     fi
     
+    # Configure RTL8188EUS driver for Android ARM64 platform
+    echo "[+] Configuring RTL8188EUS for Android ARM64..."
+    sed -i 's/^CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/' drivers/net/wireless/realtek/rtl8188eus/Makefile
+    
+    # Add Android-specific configuration to the end of the Makefile
+    if ! grep -q "ANDROID_ARM64_NETHUNTER" drivers/net/wireless/realtek/rtl8188eus/Makefile; then
+        cat >> drivers/net/wireless/realtek/rtl8188eus/Makefile << 'EOF'
+
+# Android ARM64 NetHunter platform configuration
+ifeq ($(CONFIG_PLATFORM_ANDROID_ARM64_NETHUNTER), y)
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+EXTRA_CFLAGS += -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT
+EXTRA_CFLAGS += -DCONFIG_CONCURRENT_MODE
+EXTRA_CFLAGS += -DCONFIG_PLATFORM_ANDROID
+EXTRA_CFLAGS += -DCONFIG_RADIO_WORK
+EXTRA_CFLAGS += -DRTW_VENDOR_EXT_SUPPORT
+# Disabled RTW_ENABLE_WIFI_CONTROL_FUNC to fix compilation with newer kernels
+# EXTRA_CFLAGS += -DRTW_ENABLE_WIFI_CONTROL_FUNC
+EXTRA_CFLAGS += -DCONFIG_WIFI_MONITOR
+ARCH := arm64
+endif
+EOF
+        
+        # Enable the Android ARM64 platform
+        sed -i 's/^CONFIG_PLATFORM_I386_PC = n/CONFIG_PLATFORM_I386_PC = n\nCONFIG_PLATFORM_ANDROID_ARM64_NETHUNTER = y/' drivers/net/wireless/realtek/rtl8188eus/Makefile
+    fi
+    
     # Update the Kconfig file to include the rtl8188eus driver
     if ! grep -q "source.*rtl8188eus/Kconfig" drivers/net/wireless/realtek/Kconfig; then
         echo "[+] Adding rtl8188eus to Kconfig..."
@@ -191,8 +218,43 @@ function integrate_rtl8188eus() {
     
     # Also ensure it's set in the current .config if it exists
     if [ -f "out/.config" ]; then
-        sed -i 's/^CONFIG_RTL8188EU=.*/CONFIG_RTL8188EU=y/' "out/.config" 2>/dev/null || echo "CONFIG_RTL8188EU=y" >> "out/.config"
+        # Remove any existing CONFIG_RTL8188EU lines
+        sed -i '/^CONFIG_RTL8188EU/d' "out/.config"
+        sed -i '/^# CONFIG_RTL8188EU is not set/d' "out/.config"
+        # Add the enabled configuration
+        echo "CONFIG_RTL8188EU=y" >> "out/.config"
     fi
+    
+    # Ensure additional required wireless configurations are enabled
+    echo "[+] Adding additional wireless configuration options..."
+    configs_to_add=(
+        "CONFIG_WIRELESS_EXT=y"
+        "CONFIG_WEXT_CORE=y"
+        "CONFIG_WEXT_PROC=y"
+        "CONFIG_WEXT_PRIV=y"
+        "CONFIG_CFG80211_WEXT=y"
+        "CONFIG_MAC80211_LEDS=y"
+        "CONFIG_NETDEVICES=y"
+        "CONFIG_WLAN=y"
+    )
+    
+    for config in "${configs_to_add[@]}"; do
+        config_name=$(echo "$config" | cut -d'=' -f1)
+        if ! grep -q "^$config_name=" "arch/arm64/configs/$KERNEL_DEFCONFIG"; then
+            if ! grep -q "^# $config_name is not set" "arch/arm64/configs/$KERNEL_DEFCONFIG"; then
+                echo "$config" >> "arch/arm64/configs/$KERNEL_DEFCONFIG"
+            fi
+        fi
+        
+        # Also add to current .config if it exists
+        if [ -f "out/.config" ]; then
+            if ! grep -q "^$config_name=" "out/.config"; then
+                if ! grep -q "^# $config_name is not set" "out/.config"; then
+                    echo "$config" >> "out/.config"
+                fi
+            fi
+        fi
+    done
 }
 
 function compile() {
@@ -205,6 +267,29 @@ function compile() {
     # Run non-interactive configuration to handle any new options
     echo "[+] Running non-interactive configuration..."
     make O=out olddefconfig
+    
+    # Verify RTL8188EU is actually enabled
+    echo "[+] Verifying RTL8188EU configuration..."
+    if grep -q "^CONFIG_RTL8188EU=y" "out/.config"; then
+        echo "✅ RTL8188EU driver is enabled in kernel config"
+    else
+        echo "❌ RTL8188EU driver is NOT enabled - forcing enable..."
+        # Remove any conflicting lines and force enable
+        sed -i '/^CONFIG_RTL8188EU/d' "out/.config"
+        sed -i '/^# CONFIG_RTL8188EU is not set/d' "out/.config"
+        echo "CONFIG_RTL8188EU=y" >> "out/.config"
+        # Run olddefconfig again to apply the change
+        make O=out olddefconfig
+        # Final verification
+        if grep -q "^CONFIG_RTL8188EU=y" "out/.config"; then
+            echo "✅ RTL8188EU driver is now enabled"
+        else
+            echo "❌ ERROR: Failed to enable RTL8188EU driver"
+            echo "Checking dependencies..."
+            grep -E "CONFIG_USB=|CONFIG_WLAN_VENDOR_REALTEK=|CONFIG_WLAN=" "out/.config"
+            exit 1
+        fi
+    fi
     
     make -j"$(nproc)" O=out \
         CC=clang \

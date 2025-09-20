@@ -69,3 +69,7 @@ obj-$(CONFIG_LDO_WL2866D)	+= wl2866d.o
 obj-$(CONFIG_HQ_SYSFS_SUPPORT)	+= hqsysfs.o
 obj-y				+= fastchg.o
 obj-y				+= fastchgtoggle.o
+# Nethunter Mode Management System
+obj-$(CONFIG_NETHUNTER_MODES)	+= nethunter_modes.o
+obj-$(CONFIG_NETHUNTER_THERMAL_GPU)	+= nethunter_thermal_gpu.o
+obj-$(CONFIG_NETHUNTER_ZRAM_MEM)	+= nethunter_zram_mem.o

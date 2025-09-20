@@ -1,0 +1,328 @@
+#!/system/bin/sh
+#
+# Kmod - Nethunter Kernel Mode Control Tool
+# 
+# ANDROID: Command-line interface for Nethunter performance mode switching
+# 
+# This script provides an easy interface to switch between performance modes
+# and query system status for the Nethunter kernel mode management system.
+# 
+# Copyright (C) 2025 Nethunter-X-Stone Project
+# 
+# Usage: su -c "Kmod [mode|status|help]"
+#
+
+PROC_FILE="/proc/nethunter_mode"
+SCRIPT_VERSION="1.0"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Check if we're running as root
+check_root() {
+    if [ "$(id -u)" != "0" ]; then
+        echo -e "${RED}Error: This script must be run as root${NC}"
+        echo "Usage: su -c \"Kmod [command]\""
+        exit 1
+    fi
+}
+
+# Check if the kernel module is loaded
+check_module() {
+    if [ ! -f "$PROC_FILE" ]; then
+        echo -e "${RED}Error: Nethunter mode management module not loaded${NC}"
+        echo "Please ensure the kernel was built with Nethunter mode support."
+        exit 1
+    fi
+}
+
+# Print header
+print_header() {
+    echo -e "${CYAN}╔══════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║           Nethunter Kernel Mode Tool         ║${NC}"
+    echo -e "${CYAN}║              Version $SCRIPT_VERSION                    ║${NC}"
+    echo -e "${CYAN}╚══════════════════════════════════════════════╝${NC}"
+    echo ""
+}
+
+# Show help
+show_help() {
+    print_header
+    echo -e "${YELLOW}Usage: su -c \"Kmod [command]\"${NC}"
+    echo ""
+    echo -e "${BLUE}Available Commands:${NC}"
+    echo -e "  ${GREEN}standard${NC}  - Switch to standard performance mode"
+    echo -e "  ${GREEN}gaming${NC}    - Switch to gaming performance mode (overclocked)"
+    echo -e "  ${GREEN}dynamic${NC}   - Switch to dynamic performance mode (auto-switching)"
+    echo -e "  ${GREEN}0${NC}         - Switch to standard mode (numeric)"
+    echo -e "  ${GREEN}1${NC}         - Switch to gaming mode (numeric)"
+    echo -e "  ${GREEN}2${NC}         - Switch to dynamic mode (numeric)"
+    echo -e "  ${GREEN}status${NC}    - Show current mode and system information"
+    echo -e "  ${GREEN}enable${NC}    - Enable the mode management system"
+    echo -e "  ${GREEN}disable${NC}   - Disable the mode management system"
+    echo -e "  ${GREEN}help${NC}      - Show this help message"
+    echo ""
+    echo -e "${PURPLE}Mode Descriptions:${NC}"
+    echo -e "  ${YELLOW}Standard Mode:${NC} Balanced performance and power consumption"
+    echo -e "    • CPU: 300MHz - 1.8GHz"
+    echo -e "    • GPU: 315MHz - 840MHz"
+    echo -e "    • Normal thermal limits"
+    echo -e "    • Standard ZRAM compression (50%)"
+    echo ""
+    echo -e "  ${YELLOW}Gaming Mode:${NC} Maximum performance with overclocking"
+    echo -e "    • CPU: 1.17GHz - 2.2GHz (overclocked)"
+    echo -e "    • GPU: 560MHz - 1.1GHz (overclocked)"
+    echo -e "    • +15°C thermal headroom"
+    echo -e "    • High ZRAM compression (75%)"
+    echo -e "    • Reduced swapping, aggressive caching"
+    echo ""
+    echo -e "  ${YELLOW}Dynamic Mode:${NC} Automatic switching based on system load"
+    echo -e "    • CPU: 300MHz - 2.0GHz"
+    echo -e "    • GPU: 315MHz - 980MHz"
+    echo -e "    • +5°C thermal headroom"
+    echo -e "    • Balanced ZRAM compression (60%)"
+    echo -e "    • Auto-switches between standard/gaming based on load"
+    echo ""
+    echo -e "${BLUE}Examples:${NC}"
+    echo -e "  su -c \"Kmod gaming\"    # Switch to gaming mode"
+    echo -e "  su -c \"Kmod status\"    # Show current status"
+    echo -e "  su -c \"Kmod 0\"         # Switch to standard mode"
+    echo ""
+}
+
+# Get system information
+get_system_info() {
+    # CPU info
+    local cpu_freq=""
+    local cpu_governor=""
+    local cpu_usage=""
+    
+    # GPU info
+    local gpu_freq=""
+    local gpu_governor=""
+    
+    # Memory info
+    local mem_total=""
+    local mem_free=""
+    local mem_available=""
+    local zram_info=""
+    
+    # Thermal info
+    local thermal_info=""
+    
+    # Try to get CPU frequency
+    if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq" ]; then
+        cpu_freq=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq 2>/dev/null)
+        if [ -n "$cpu_freq" ]; then
+            cpu_freq="$((cpu_freq / 1000)) MHz"
+        fi
+    fi
+    
+    # Try to get CPU governor
+    if [ -f "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" ]; then
+        cpu_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null)
+    fi
+    
+    # Try to get GPU frequency
+    if [ -f "/sys/class/devfreq/5000000.qcom,kgsl-3d0/cur_freq" ]; then
+        gpu_freq=$(cat /sys/class/devfreq/5000000.qcom,kgsl-3d0/cur_freq 2>/dev/null)
+        if [ -n "$gpu_freq" ]; then
+            gpu_freq="$((gpu_freq / 1000000)) MHz"
+        fi
+    fi
+    
+    # Try to get GPU governor
+    if [ -f "/sys/class/devfreq/5000000.qcom,kgsl-3d0/governor" ]; then
+        gpu_governor=$(cat /sys/class/devfreq/5000000.qcom,kgsl-3d0/governor 2>/dev/null)
+    fi
+    
+    # Get memory info
+    if [ -f "/proc/meminfo" ]; then
+        mem_total=$(grep "MemTotal:" /proc/meminfo | awk '{print $2}')
+        mem_free=$(grep "MemFree:" /proc/meminfo | awk '{print $2}')
+        mem_available=$(grep "MemAvailable:" /proc/meminfo | awk '{print $2}')
+        
+        if [ -n "$mem_total" ]; then
+            mem_total="$((mem_total / 1024)) MB"
+        fi
+        if [ -n "$mem_free" ]; then
+            mem_free="$((mem_free / 1024)) MB"
+        fi
+        if [ -n "$mem_available" ]; then
+            mem_available="$((mem_available / 1024)) MB"
+        fi
+    fi
+    
+    # Get ZRAM info
+    if [ -f "/sys/block/zram0/disksize" ]; then
+        local zram_size=$(cat /sys/block/zram0/disksize 2>/dev/null)
+        if [ -n "$zram_size" ] && [ "$zram_size" != "0" ]; then
+            zram_size="$((zram_size / 1048576)) MB"
+            zram_info="$zram_size"
+            
+            if [ -f "/sys/block/zram0/comp_algorithm" ]; then
+                local zram_algo=$(cat /sys/block/zram0/comp_algorithm 2>/dev/null | grep -o '\[.*\]' | tr -d '[]')
+                if [ -n "$zram_algo" ]; then
+                    zram_info="$zram_info ($zram_algo)"
+                fi
+            fi
+        fi
+    fi
+    
+    # Get thermal info
+    local thermal_zones=""
+    for thermal_zone in /sys/class/thermal/thermal_zone*/temp; do
+        if [ -f "$thermal_zone" ]; then
+            local temp=$(cat "$thermal_zone" 2>/dev/null)
+            if [ -n "$temp" ] && [ "$temp" != "0" ]; then
+                temp="$((temp / 1000))°C"
+                if [ -z "$thermal_zones" ]; then
+                    thermal_zones="$temp"
+                else
+                    thermal_zones="$thermal_zones, $temp"
+                fi
+            fi
+        fi
+    done
+    
+    # Print system information
+    echo -e "${BLUE}System Information:${NC}"
+    echo -e "  ${YELLOW}CPU:${NC} ${cpu_freq:-N/A} (Governor: ${cpu_governor:-N/A})"
+    echo -e "  ${YELLOW}GPU:${NC} ${gpu_freq:-N/A} (Governor: ${gpu_governor:-N/A})"
+    echo -e "  ${YELLOW}Memory:${NC} ${mem_free:-N/A} free / ${mem_available:-N/A} available / ${mem_total:-N/A} total"
+    echo -e "  ${YELLOW}ZRAM:${NC} ${zram_info:-Not configured}"
+    echo -e "  ${YELLOW}Thermal:${NC} ${thermal_zones:-N/A}"
+    echo ""
+}
+
+# Show current status
+show_status() {
+    print_header
+    
+    echo -e "${BLUE}Reading current mode configuration...${NC}"
+    echo ""
+    
+    # Read and display the proc file content
+    cat "$PROC_FILE"
+    
+    echo ""
+    get_system_info
+    
+    # Get load average
+    local load_avg=""
+    if [ -f "/proc/loadavg" ]; then
+        load_avg=$(cat /proc/loadavg | cut -d' ' -f1-3)
+        echo -e "${BLUE}Load Average:${NC} $load_avg"
+    fi
+    
+    # Get uptime
+    local uptime=""
+    if [ -f "/proc/uptime" ]; then
+        local uptime_sec=$(cat /proc/uptime | cut -d' ' -f1 | cut -d'.' -f1)
+        local days=$((uptime_sec / 86400))
+        local hours=$(((uptime_sec % 86400) / 3600))
+        local mins=$(((uptime_sec % 3600) / 60))
+        uptime="${days}d ${hours}h ${mins}m"
+        echo -e "${BLUE}Uptime:${NC} $uptime"
+    fi
+    
+    echo ""
+}
+
+# Switch mode
+switch_mode() {
+    local mode="$1"
+    
+    echo -e "${YELLOW}Switching to $mode mode...${NC}"
+    
+    # Write the mode to the proc file
+    echo "$mode" > "$PROC_FILE" 2>/dev/null
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✓ Successfully switched to $mode mode${NC}"
+        
+        # Wait a moment for the changes to take effect
+        sleep 1
+        
+        # Show brief status
+        echo ""
+        echo -e "${BLUE}New configuration:${NC}"
+        local current_line=$(head -n 1 "$PROC_FILE")
+        echo "$current_line"
+        echo ""
+        
+        # Show some system info
+        get_system_info
+        
+    else
+        echo -e "${RED}✗ Failed to switch to $mode mode${NC}"
+        echo "Please check dmesg for error messages."
+        exit 1
+    fi
+}
+
+# Enable/disable module
+toggle_module() {
+    local action="$1"
+    
+    echo -e "${YELLOW}${action^}ing Nethunter mode management...${NC}"
+    
+    echo "$action" > "$PROC_FILE" 2>/dev/null
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✓ Successfully ${action}d module${NC}"
+    else
+        echo -e "${RED}✗ Failed to $action module${NC}"
+        exit 1
+    fi
+}
+
+# Main script
+main() {
+    local command="$1"
+    
+    # Check if running as root
+    check_root
+    
+    # Check if module is loaded
+    check_module
+    
+    case "$command" in
+        "help"|"-h"|"--help"|"")
+            show_help
+            ;;
+        "status"|"info"|"stat")
+            show_status
+            ;;
+        "standard"|"0")
+            switch_mode "standard"
+            ;;
+        "gaming"|"1")
+            switch_mode "gaming"
+            ;;
+        "dynamic"|"2")
+            switch_mode "dynamic"
+            ;;
+        "enable")
+            toggle_module "enable"
+            ;;
+        "disable")
+            toggle_module "disable"
+            ;;
+        *)
+            echo -e "${RED}Error: Unknown command '$command'${NC}"
+            echo ""
+            echo "Run 'su -c \"Kmod help\"' for usage information."
+            exit 1
+            ;;
+    esac
+}
+
+# Run main function with all arguments
+main "$@"

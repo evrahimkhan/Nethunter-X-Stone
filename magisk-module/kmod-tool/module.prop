@@ -1,0 +1,7 @@
+id=kmod_tool
+name=Nethunter Kmod Tool
+version=v1.0.0
+versionCode=10000
+author=Nethunter-X-Stone Project
+description=Nethunter kernel mode control tool for performance optimization. Provides gaming, standard, and dynamic performance modes with CPU/GPU overclocking capabilities.
+updateJson=
