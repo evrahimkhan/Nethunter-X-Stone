@@ -257,12 +257,35 @@ EOF
     done
 }
 
+function integrate_ft3519t() {
+    echo "[+] Integrating FT3519T touchscreen driver..."
+
+    # Ensure the FT3519T driver is enabled in defconfig
+    if grep -q "^CONFIG_TOUCHSCREEN_FT3519T=" "arch/arm64/configs/$KERNEL_DEFCONFIG"; then
+        sed -i 's/^CONFIG_TOUCHSCREEN_FT3519T=.*/CONFIG_TOUCHSCREEN_FT3519T=y/' "arch/arm64/configs/$KERNEL_DEFCONFIG"
+    elif grep -q "^# CONFIG_TOUCHSCREEN_FT3519T is not set" "arch/arm64/configs/$KERNEL_DEFCONFIG"; then
+        sed -i 's/^# CONFIG_TOUCHSCREEN_FT3519T is not set/CONFIG_TOUCHSCREEN_FT3519T=y/' "arch/arm64/configs/$KERNEL_DEFCONFIG"
+    else
+        echo "CONFIG_TOUCHSCREEN_FT3519T=y" >> "arch/arm64/configs/$KERNEL_DEFCONFIG"
+    fi
+
+    # Also ensure it's set in current .config if present
+    if [ -f "out/.config" ]; then
+        sed -i '/^CONFIG_TOUCHSCREEN_FT3519T/d' "out/.config"
+        sed -i '/^# CONFIG_TOUCHSCREEN_FT3519T is not set/d' "out/.config"
+        echo "CONFIG_TOUCHSCREEN_FT3519T=y" >> "out/.config"
+    fi
+}
+
 function compile() {
     echo "[+] Building kernel..."
     make O=out "$KERNEL_DEFCONFIG"
     
     # Integrate the rtl8188eus driver before compilation
     integrate_rtl8188eus
+    
+    # Ensure FT3519T touchscreen is enabled
+    integrate_ft3519t
     
     # Run non-interactive configuration to handle any new options
     echo "[+] Running non-interactive configuration..."
@@ -287,6 +310,24 @@ function compile() {
             echo "❌ ERROR: Failed to enable RTL8188EU driver"
             echo "Checking dependencies..."
             grep -E "CONFIG_USB=|CONFIG_WLAN_VENDOR_REALTEK=|CONFIG_WLAN=" "out/.config"
+            exit 1
+        fi
+    fi
+
+    # Verify FT3519T touchscreen is enabled
+    echo "[+] Verifying FT3519T touchscreen configuration..."
+    if grep -q '^CONFIG_TOUCHSCREEN_FT3519T=y' "out/.config"; then
+        echo "✅ FT3519T touchscreen driver is enabled in kernel config"
+    else
+        echo "❌ FT3519T driver is NOT enabled - forcing enable..."
+        sed -i '/^CONFIG_TOUCHSCREEN_FT3519T/d' "out/.config"
+        sed -i '/^# CONFIG_TOUCHSCREEN_FT3519T is not set/d' "out/.config"
+        echo 'CONFIG_TOUCHSCREEN_FT3519T=y' >> "out/.config"
+        make O=out olddefconfig
+        if grep -q '^CONFIG_TOUCHSCREEN_FT3519T=y' "out/.config"; then
+            echo "✅ FT3519T touchscreen driver is now enabled"
+        else
+            echo "❌ ERROR: Failed to enable FT3519T touchscreen driver"
             exit 1
         fi
     fi
