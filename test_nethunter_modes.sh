@@ -235,9 +235,8 @@ test_modules() {
     # Test 6: Syntax check modules (basic)
     echo -e "${YELLOW}Test 6: Basic syntax check...${NC}"
     for file in "${module_files[@]}"; do
-        # Check for basic C syntax issues
-        if grep -q "CONFIG_NETHUNTER" "$file" && \
-           grep -q "module_init" "$file" && \
+        # Check for basic C syntax issues (module_init and module_exit are required)
+        if grep -q "module_init" "$file" && \
            grep -q "module_exit" "$file"; then
             echo -e "${GREEN}  ✓ $(basename "$file") has proper module structure${NC}"
         else

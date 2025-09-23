@@ -1,0 +1,36 @@
+[2025-09-23 11:20:20] === Nethunter-X Kernel Build Started at 2025-09-23 11:20:20 ===
+[2025-09-23 11:20:20] === System Information ===
+[2025-09-23 11:20:20] [+] OS: kali
+[2025-09-23 11:20:20] [+] Architecture: amd64
+[2025-09-23 11:20:20] [+] Target Architecture: arm64 (forced for Android kernel)
+[2025-09-23 11:20:20] === Checking Dependencies ===
+[2025-09-23 11:20:20] [+] Detected OS: kali
+[2025-09-23 11:20:20] [+] Detected Architecture: amd64
+[2025-09-23 11:20:20] === Installing Dependencies (Debian/Ubuntu/Kali/Linux Mint) ===
+[2025-09-23 11:20:20] [+] Updating package list...
+[2025-09-23 11:20:20] [EXECUTING] sudo apt-get update
+[2025-09-23 11:20:23] [+] Installing missing packages: libncurses-dev libssl-dev lld
+[2025-09-23 11:20:23] [EXECUTING] sudo apt-get install -y libncurses-dev libssl-dev lld
+[2025-09-23 11:20:24] === Setting up Clang Compiler ===
+[2025-09-23 11:20:24] [+] Compiler: Debian clang version 19.1.7 (3+b2)
+[2025-09-23 11:20:24] === Compiling Kernel ===
+[2025-09-23 11:20:24] === Integrating RTL8188EUS WiFi Driver ===
+[2025-09-23 11:20:24] [+] Configuring RTL8188EUS for Android ARM64...
+[2025-09-23 11:20:24] [+] Successfully configured RTL8188EUS driver
+[2025-09-23 11:20:24] [+] Adding rtl8188eus to Kconfig...
+[2025-09-23 11:20:24] [+] Adding rtl8188eus to Makefile...
+[2025-09-23 11:20:24] [+] Enabling rtl8188eus driver as built-in...
+[2025-09-23 11:20:24] [+] Adding additional wireless configuration options...
+[2025-09-23 11:20:24] [+] Successfully integrated RTL8188EUS driver
+[2025-09-23 11:20:24] === Integrating FT3519T Touchscreen Driver ===
+[2025-09-23 11:20:24] [+] Successfully integrated FT3519T touchscreen driver
+[2025-09-23 11:20:24] [+] Verifying RTL8188EU configuration...
+[2025-09-23 11:20:24] [+] Verifying FT3519T touchscreen configuration...
+[2025-09-23 11:20:24] [+] Compiling kernel with 4 threads (this may take a while)...
+[2025-09-23 11:20:24] [+] Started compilation at 2025-09-23 11:20:24
+[2025-09-23 11:20:24] [+] Finished compilation at 2025-09-23 11:20:24
+[2025-09-23 11:20:24] [+] Compilation took 0:00:00.001203
+[2025-09-23 11:20:24] ✅ Kernel compilation completed successfully!
+[2025-09-23 11:20:24] === Packaging Kernel ===
+[2025-09-23 11:20:24] ❌ Kernel Image missing!
+[2025-09-23 11:20:24] ❌ Kernel packaging failed!

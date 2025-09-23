@@ -1,0 +1,163 @@
+2025-09-23 04:19:12 - [+] Logging to: log/build_20250923_041912.log
+2025-09-23 04:19:12 - [+] System Information:
+2025-09-23 04:19:12 -     OS: kali
+2025-09-23 04:19:12 -     Architecture: amd64
+2025-09-23 04:19:12 - [+] Checking dependencies...
+2025-09-23 04:19:12 - [+] Detected OS: kali
+2025-09-23 04:19:12 - [+] Detected Architecture: amd64
+2025-09-23 04:19:12 - [+] Updating package list...
+2025-09-23 04:19:12 - [COMMAND] sudo apt-get update
+2025-09-23 04:19:12 - [+] All required packages are already installed
+2025-09-23 04:19:12 - [+] All required tools are available
+2025-09-23 04:19:12 - [+] Dependency check completed successfully!
+2025-09-23 04:19:12 - [+] Compiler: Running in separate terminal
+2025-09-23 04:19:12 - [+] Building kernel...
+2025-09-23 04:19:12 - [COMMAND] make O=out nethunter_defconfig
+2025-09-23 04:19:12 - [+] Integrating rtl8188eus driver...
+2025-09-23 04:19:12 - [+] Configuring RTL8188EUS for Android ARM64...
+2025-09-23 04:19:12 - [+] Adding rtl8188eus to Kconfig...
+2025-09-23 04:19:12 - [+] Adding rtl8188eus to Makefile...
+2025-09-23 04:19:12 - [+] Enabling rtl8188eus driver as built-in...
+2025-09-23 04:19:13 - [+] Adding additional wireless configuration options...
+2025-09-23 04:19:13 - [+] Integrating FT3519T touchscreen driver...
+2025-09-23 04:19:13 - [+] Running non-interactive configuration...
+2025-09-23 04:19:13 - [COMMAND] make O=out olddefconfig
+2025-09-23 04:19:13 - [+] Verifying RTL8188EU configuration...
+2025-09-23 04:19:13 - [+] Verifying FT3519T touchscreen configuration...
+2025-09-23 04:19:13 - [+] Compiling kernel (this may take a while)...
+2025-09-23 04:19:13 - [COMMAND] make -j4 O=out CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy STRIP=llvm-strip CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+2025-09-23 04:19:13 - ✅ Kernel compilation completed successfully!
+2025-09-23 04:19:13 - ❌ Kernel Image missing!
+Hit:1 https://dl.google.com/linux/chrome/deb stable InRelease
+Ign:2 https://releases.warp.dev/linux/deb stable InRelease
+Hit:3 http://http.kali.org/kali kali-rolling InRelease
+Hit:4 https://packages.microsoft.com/repos/code stable InRelease
+Hit:5 https://releases.warp.dev/linux/deb stable Release
+  GEN     Makefile
+  HOSTCC  scripts/basic/fixdep
+  GEN     Makefile
+  HOSTCC  scripts/kconfig/conf.o
+  HOSTCC  scripts/kconfig/conf.o
+Hit:7 https://downloads.cursor.com/aptrepo stable InRelease
+Reading package lists...  HOSTCC  scripts/kconfig/confdata.o
+  HOSTCC  scripts/kconfig/confdata.o
+  HOSTCC  scripts/kconfig/expr.o
+  HOSTCC  scripts/kconfig/expr.o
+  LEX     scripts/kconfig/lexer.lex.c
+  LEX     scripts/kconfig/lexer.lex.c
+  YACC    scripts/kconfig/parser.tab.[ch]
+  YACC    scripts/kconfig/parser.tab.[ch]
+
+  HOSTCC  scripts/kconfig/lexer.lex.o
+  HOSTCC  scripts/kconfig/lexer.lex.o
+***
+*** Configuration file ".config" not found!
+***
+*** Please run some configurator (e.g. "make oldconfig" or
+*** "make menuconfig" or "make xconfig").
+***
+/home/kali/project/new/Nethunter-X-Stone/Makefile:714: include/config/auto.conf.cmd: No such file or directory
+make[1]: *** [/home/kali/project/new/Nethunter-X-Stone/Makefile:723: .config] Error 1
+make: *** [Makefile:190: sub-make] Error 2
+  HOSTCC  scripts/kconfig/parser.tab.o
+  HOSTCC  scripts/kconfig/parser.tab.o
+  HOSTCC  scripts/kconfig/preprocess.o
+  HOSTCC  scripts/kconfig/preprocess.o
+  HOSTCC  scripts/kconfig/symbol.o
+  HOSTCC  scripts/kconfig/symbol.o
+  HOSTLD  scripts/kconfig/conf
+scripts/kconfig/conf  --olddefconfig Kconfig
+  HOSTLD  scripts/kconfig/conf
+/boot/config-6.12.38+kali-amd64:779:warning: symbol value 'm' invalid for HAVE_KVM_IRQ_BYPASS
+/boot/config-6.12.38+kali-amd64:792:warning: symbol value 'm' invalid for KVM
+/boot/config-6.12.38+kali-amd64:2513:warning: symbol value 'm' invalid for MTD_CFI
+/boot/config-6.12.38+kali-amd64:2514:warning: symbol value 'm' invalid for MTD_JEDECPROBE
+/boot/config-6.12.38+kali-amd64:2515:warning: symbol value 'm' invalid for MTD_GEN_PROBE
+/boot/config-6.12.38+kali-amd64:4030:warning: symbol value 'm' invalid for RTW88_8822BE
+/boot/config-6.12.38+kali-amd64:4033:warning: symbol value 'm' invalid for RTW88_8822CE
+/boot/config-6.12.38+kali-amd64:4608:warning: symbol value 'm' invalid for I2C_ALGOBIT
+/boot/config-6.12.38+kali-amd64:5321:warning: symbol value 'm' invalid for PROC_THERMAL_MMIO_RAPL
+/boot/config-6.12.38+kali-amd64:5612:warning: symbol value 'm' invalid for RC_CORE
+/boot/config-6.12.38+kali-amd64:5795:warning: symbol value 'm' invalid for VIDEO_PVRUSB2
+/boot/config-6.12.38+kali-amd64:5804:warning: symbol value 'm' invalid for VIDEO_AU0828
+/boot/config-6.12.38+kali-amd64:5807:warning: symbol value 'm' invalid for VIDEO_CX231XX
+/boot/config-6.12.38+kali-amd64:5810:warning: symbol value 'm' invalid for VIDEO_CX231XX_DVB
+/boot/config-6.12.38+kali-amd64:5815:warning: symbol value 'm' invalid for DVB_AS102
+/boot/config-6.12.38+kali-amd64:5818:warning: symbol value 'm' invalid for DVB_USB_V2
+/boot/config-6.12.38+kali-amd64:5819:warning: symbol value 'm' invalid for DVB_USB_AF9015
+/boot/config-6.12.38+kali-amd64:5820:warning: symbol value 'm' invalid for DVB_USB_AF9035
+/boot/config-6.12.38+kali-amd64:5821:warning: symbol value 'm' invalid for DVB_USB_ANYSEE
+/boot/config-6.12.38+kali-amd64:5822:warning: symbol value 'm' invalid for DVB_USB_AU6610
+/boot/config-6.12.38+kali-amd64:5823:warning: symbol value 'm' invalid for DVB_USB_AZ6007
+/boot/config-6.12.38+kali-amd64:5824:warning: symbol value 'm' invalid for DVB_USB_CE6230
+/boot/config-6.12.38+kali-amd64:5826:warning: symbol value 'm' invalid for DVB_USB_EC168
+/boot/config-6.12.38+kali-amd64:5827:warning: symbol value 'm' invalid for DVB_USB_GL861
+/boot/config-6.12.38+kali-amd64:5828:warning: symbol value 'm' invalid for DVB_USB_LME2510
+/boot/config-6.12.38+kali-amd64:5829:warning: symbol value 'm' invalid for DVB_USB_MXL111SF
+/boot/config-6.12.38+kali-amd64:5830:warning: symbol value 'm' invalid for DVB_USB_RTL28XXU
+/boot/config-6.12.38+kali-amd64:5832:warning: symbol value 'm' invalid for DVB_USB
+/boot/config-6.12.38+kali-amd64:5835:warning: symbol value 'm' invalid for DVB_USB_AF9005
+/boot/config-6.12.38+kali-amd64:5839:warning: symbol value 'm' invalid for DVB_USB_CXUSB
+/boot/config-6.12.38+kali-amd64:5841:warning: symbol value 'm' invalid for DVB_USB_DIB0700
+/boot/config-6.12.38+kali-amd64:5843:warning: symbol value 'm' invalid for DVB_USB_DIBUSB_MB
+/boot/config-6.12.38+kali-amd64:5845:warning: symbol value 'm' invalid for DVB_USB_DIBUSB_MC
+/boot/config-6.12.38+kali-amd64:5846:warning: symbol value 'm' invalid for DVB_USB_DIGITV
+/boot/config-6.12.38+kali-amd64:5848:warning: symbol value 'm' invalid for DVB_USB_DTV5100
+/boot/config-6.12.38+kali-amd64:5849:warning: symbol value 'm' invalid for DVB_USB_DW2102
+/boot/config-6.12.38+kali-amd64:5850:warning: symbol value 'm' invalid for DVB_USB_GP8PSK
+/boot/config-6.12.38+kali-amd64:5851:warning: symbol value 'm' invalid for DVB_USB_M920X
+/boot/config-6.12.38+kali-amd64:5853:warning: symbol value 'm' invalid for DVB_USB_OPERA1
+/boot/config-6.12.38+kali-amd64:5854:warning: symbol value 'm' invalid for DVB_USB_PCTV452E
+/boot/config-6.12.38+kali-amd64:5855:warning: symbol value 'm' invalid for DVB_USB_TECHNISAT_USB2
+/boot/config-6.12.38+kali-amd64:5856:warning: symbol value 'm' invalid for DVB_USB_TTUSB2
+/boot/config-6.12.38+kali-amd64:5857:warning: symbol value 'm' invalid for DVB_USB_UMT_010
+/boot/config-6.12.38+kali-amd64:5861:warning: symbol value 'm' invalid for DVB_TTUSB_BUDGET
+/boot/config-6.12.38+kali-amd64:5867:warning: symbol value 'm' invalid for VIDEO_EM28XX
+/boot/config-6.12.38+kali-amd64:5870:warning: symbol value 'm' invalid for VIDEO_EM28XX_DVB
+/boot/config-6.12.38+kali-amd64:5906:warning: symbol value 'm' invalid for VIDEO_BT848
+/boot/config-6.12.38+kali-amd64:5907:warning: symbol value 'm' invalid for DVB_BT8XX
+/boot/config-6.12.38+kali-amd64:5909:warning: symbol value 'm' invalid for VIDEO_CX18
+/boot/config-6.12.38+kali-amd64:5916:warning: symbol value 'm' invalid for VIDEO_CX88_BLACKBIRD
+/boot/config-6.12.38+kali-amd64:5917:warning: symbol value 'm' invalid for VIDEO_CX88_DVB
+/boot/config-6.12.38+kali-amd64:5924:warning: symbol value 'm' invalid for VIDEO_SAA7134_DVB
+/boot/config-6.12.38+kali-amd64:5925:warning: symbol value 'm' invalid for VIDEO_SAA7164
+/boot/config-6.12.38+kali-amd64:5932:warning: symbol value 'm' invalid for DVB_DDBRIDGE
+/boot/config-6.12.38+kali-amd64:5934:warning: symbol value 'm' invalid for DVB_DM1105
+/boot/config-6.12.38+kali-amd64:5935:warning: symbol value 'm' invalid for MANTIS_CORE
+/boot/config-6.12.38+kali-amd64:5936:warning: symbol value 'm' invalid for DVB_MANTIS
+/boot/config-6.12.38+kali-amd64:5937:warning: symbol value 'm' invalid for DVB_HOPPER
+/boot/config-6.12.38+kali-amd64:5938:warning: symbol value 'm' invalid for DVB_NETUP_UNIDVB
+/boot/config-6.12.38+kali-amd64:5939:warning: symbol value 'm' invalid for DVB_NGENE
+/boot/config-6.12.38+kali-amd64:5943:warning: symbol value 'm' invalid for DVB_SMIPCIE
+/boot/config-6.12.38+kali-amd64:5944:warning: symbol value 'm' invalid for DVB_BUDGET_CORE
+/boot/config-6.12.38+kali-amd64:5945:warning: symbol value 'm' invalid for DVB_BUDGET
+/boot/config-6.12.38+kali-amd64:5946:warning: symbol value 'm' invalid for DVB_BUDGET_CI
+/boot/config-6.12.38+kali-amd64:5947:warning: symbol value 'm' invalid for DVB_BUDGET_AV
+/boot/config-6.12.38+kali-amd64:5952:warning: symbol value 'm' invalid for RADIO_ADAPTERS
+/boot/config-6.12.38+kali-amd64:6110:warning: symbol value 'm' invalid for DVB_B2C2_FLEXCOP
+/boot/config-6.12.38+kali-amd64:6377:warning: symbol value 'm' invalid for MEDIA_TUNER_TDA8290
+/boot/config-6.12.38+kali-amd64:6573:warning: symbol value 'm' invalid for DRM
+/boot/config-6.12.38+kali-amd64:6599:warning: symbol value 'm' invalid for DRM_GEM_SHMEM_HELPER
+/boot/config-6.12.38+kali-amd64:6649:warning: symbol value 'm' invalid for DRM_I915
+/boot/config-6.12.38+kali-amd64:7813:warning: symbol value 'm' invalid for USB
+/boot/config-6.12.38+kali-amd64:8576:warning: symbol value 'm' invalid for VFIO
+/boot/config-6.12.38+kali-amd64:8835:warning: symbol value 'm' invalid for DVB_AV7110
+/boot/config-6.12.38+kali-amd64:9037:warning: symbol value 'm' invalid for INTEL_IPS
+/boot/config-6.12.38+kali-amd64:9106:warning: symbol value 'm' invalid for VIRTIO_IOMMU
+/boot/config-6.12.38+kali-amd64:9967:warning: symbol value 'm' invalid for ANDROID_BINDER_IPC
+/boot/config-6.12.38+kali-amd64:10318:warning: symbol value 'm' invalid for NFS_V3
+/boot/config-6.12.38+kali-amd64:10320:warning: symbol value 'm' invalid for NFS_V4
+/boot/config-6.12.38+kali-amd64:10325:warning: symbol value 'm' invalid for PNFS_BLOCK
+/boot/config-6.12.38+kali-amd64:10326:warning: symbol value 'm' invalid for PNFS_FLEXFILE_LAYOUT
+***
+*** Can't find default configuration "arch/x86/configs/nethunter_defconfig"!
+***
+make[2]: *** [../scripts/kconfig/Makefile:90: nethunter_defconfig] Error 1
+make[1]: *** [/home/kali/project/new/Nethunter-X-Stone/Makefile:616: nethunter_defconfig] Error 2
+make: *** [Makefile:190: sub-make] Error 2
+#
+# using defaults found in /boot/config-6.12.38+kali-amd64
+#
+#
+# configuration written to .config
+#
