@@ -51,15 +51,27 @@ static struct proc_dir_entry *fts_proc_tp_info_entry;
 * Global variable or extern global variabls/functions
 *****************************************************************************/
 u8 fw_file[] = {
+#ifdef CONFIG_TOUCHSCREEN_FT3519T_UPGRADE
 #include FTS_UPGRADE_FW_FILE
+#else
+0
+#endif
 };
 
 u8 fw_file2[] = {
+#ifdef CONFIG_TOUCHSCREEN_FT3519T_UPGRADE
 #include FTS_UPGRADE_FW2_FILE
+#else
+0
+#endif
 };
 
 u8 fw_file3[] = {
+#ifdef CONFIG_TOUCHSCREEN_FT3519T_UPGRADE
 #include FTS_UPGRADE_FW3_FILE
+#else
+0
+#endif
 };
 
 struct upgrade_module module_list[] = {

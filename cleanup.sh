@@ -1,88 +1,50 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-DEVICE_CODENAME="stone"
-KERNEL_NAME="Nethunter-X"
-ANYKERNEL_DIR="$PWD/anykernel"
-OUT_DIR="$PWD/out"
+# Cleanup script for Nethunter-X kernel build
 
-echo "[+] Starting cleanup process..."
+echo "[+] Starting cleanup..."
 
-# Clean the kernel build output directory if it exists
-echo "[+] Cleaning kernel build directory..."
+# Remove build output directory
 if [ -d "out" ]; then
-    # Try to run make clean and mrproper first
-    if [ -f "out/Makefile" ]; then
-        make -C out clean 2>/dev/null || echo "[*] Warning: Could not run make clean"
-        make -C out mrproper 2>/dev/null || echo "[*] Warning: Could not run make mrproper"
-    fi
-    
-    # Ask user if they want to completely remove the out directory
-    echo -n "[?] Do you want to completely remove the out/ directory? (y/N): "
-    read -r response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-        echo "[+] Removing out/ directory completely..."
-        rm -rf out/
-        echo "[+] out/ directory removed successfully!"
-    else
-        echo "[*] out/ directory preserved as requested."
-    fi
-else
-    echo "[*] No out directory found"
+    echo "[+] Removing build output directory..."
+    rm -rf out
 fi
 
-# Remove generated files from anykernel directory, but preserve the base structure
-echo "[+] Cleaning anykernel directory..."
-rm -f "$ANYKERNEL_DIR/Image" "$ANYKERNEL_DIR/dtbo.img"
-rm -f "$ANYKERNEL_DIR"/*.zip
+# Remove any generated zip files
+echo "[+] Removing generated zip files..."
+rm -f Nethunter-X-*.zip
 
-# Reset KernelSU configuration if it was enabled
-if [ -d "KernelSU" ]; then
-    echo "[+] Resetting KernelSU configuration..."
-    KERNEL_DEFCONFIG="nethunter_defconfig"
-    if grep -q "CONFIG_KSU=y" "arch/arm64/configs/$KERNEL_DEFCONFIG"; then
-        sed -i "s/CONFIG_KSU=y/CONFIG_KSU=n/g" "arch/arm64/configs/$KERNEL_DEFCONFIG"
-        echo "[+] KernelSU disabled in defconfig"
-    fi
+# Remove any log files or log folders
+if [ -d "logs" ]; then
+    echo "[+] Removing logs folder..."
+    rm -rf logs
 fi
 
-# Reset rtl8188eus driver integration
-echo "[+] Resetting rtl8188eus driver integration..."
-KERNEL_DEFCONFIG="nethunter_defconfig"
-if grep -q "CONFIG_RTL8188EU=y" "arch/arm64/configs/$KERNEL_DEFCONFIG"; then
-    sed -i "s/CONFIG_RTL8188EU=y/# CONFIG_RTL8188EU is not set/g" "arch/arm64/configs/$KERNEL_DEFCONFIG"
-    echo "[+] rtl8188eus driver disabled in defconfig"
+# Remove .log files in the project root
+echo "[+] Removing .log files..."
+rm -f *.log
+
+# Clean any temporary files
+echo "[+] Removing temporary files..."
+rm -f *.tmp
+rm -f .config.old
+rm -f .scmversion
+
+# Clean any build artifacts in the kernel source
+echo "[+] Cleaning kernel build artifacts..."
+if [ -f "Makefile" ]; then
+    make mrproper
 fi
 
-# Remove rtl8188eus entries from Kconfig and Makefile if they exist
-if grep -q "source.*rtl8188eus/Kconfig" drivers/net/wireless/realtek/Kconfig; then
-    sed -i "/source.*rtl8188eus\/Kconfig/d" drivers/net/wireless/realtek/Kconfig
-    echo "[+] rtl8188eus removed from Kconfig"
-fi
+# Remove any leftover files from previous builds
+echo "[+] Removing any remaining build artifacts..."
+find . -name "*.o" -type f -delete
+find . -name "*.cmd" -type f -delete
+find . -name "*.d" -type f -delete
+find . -name "*.mod.c" -type f -delete
+find . -name "*.mod.o" -type f -delete
+find . -name "*.ko" -type f -delete
+find . -name "*.a" -type f -delete
+find . -name "*.symvers" -type f -delete
 
-if grep -q "obj-\$(CONFIG_RTL8188EU).*rtl8188eus/" drivers/net/wireless/realtek/Makefile; then
-    sed -i "/obj-\$(CONFIG_RTL8188EU).*rtl8188eus\//d" drivers/net/wireless/realtek/Makefile
-    echo "[+] rtl8188eus removed from Makefile"
-fi
-
-# Clean up any generated zip files in the root directory
-echo "[+] Checking for generated kernel zip files..."
-ZIP_FILES=$(ls "$KERNEL_NAME-$DEVICE_CODENAME"-*.zip 2>/dev/null)
-if [ -n "$ZIP_FILES" ]; then
-    echo "[+] Found generated kernel zip files:"
-    ls -la "$KERNEL_NAME-$DEVICE_CODENAME"-*.zip
-    echo -n "[?] Do you want to remove these zip files? (y/N): "
-    read -r response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-        echo "[+] Removing generated kernel zip files..."
-        # Remove all zip files matching the pattern Nethunter-X-stone-*.zip (with or without KSU variant)
-        rm -f "$KERNEL_NAME-$DEVICE_CODENAME"-*.zip
-        echo "[+] Zip files removed successfully!"
-    else
-        echo "[*] Zip files preserved as requested."
-    fi
-else
-    echo "[*] No generated kernel zip files found."
-fi
-
-echo "[+] Cleanup completed successfully!"
-echo "[NOTE] The out/ directory cleanup was processed based on user input."
+echo "[+] Cleanup completed!"
